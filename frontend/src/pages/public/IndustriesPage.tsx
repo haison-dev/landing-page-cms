@@ -3,6 +3,22 @@ import { EmptyState } from '@/components/public/EmptyState';
 import { useIndustriesQuery } from '@/features/industries/hooks/useIndustryQueries';
 import { useLandingPagesQuery } from '@/features/landing-pages/hooks/useLandingPageQueries';
 
+const industryFallbackImages: Record<string, string> = {
+  'thoi-trang': 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=80',
+  'my-pham': 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1200&q=80',
+  'dien-tu': 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80',
+  'noi-that': 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80',
+  'me-va-be': 'https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=1200&q=80',
+  'nha-sach-van-phong-pham': 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=1200&q=80',
+  'am-thuc-an-uong': 'https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=1200&q=80',
+  'suc-khoe-nha-thuoc': 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80',
+  'trang-suc-qua-tang': 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1200&q=80',
+  'sieu-thi-tap-hoa': 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=80'
+};
+
+const getIndustryImage = (slug: string) =>
+  industryFallbackImages[slug] || `https://source.unsplash.com/1200x800/?${encodeURIComponent(slug.replace(/-/g, ' '))}`;
+
 export default function IndustriesPage() {
   const { data: industries, isLoading: loadingIndustries } = useIndustriesQuery({ publicOnly: true }, 'public');
   const { data: pagesData } = useLandingPagesQuery({ status: 'published', page: 1, limit: 50 });
@@ -16,7 +32,7 @@ export default function IndustriesPage() {
     });
     return {
       ...industry,
-      image: page?.thumbnailUrl || page?.mockupUrl || ''
+      image: page?.thumbnailUrl || page?.mockupUrl || getIndustryImage(industry.slug)
     };
   });
 

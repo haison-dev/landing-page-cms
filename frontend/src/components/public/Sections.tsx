@@ -10,7 +10,7 @@ const industryFallbackImages: Record<string, string> = {
   'dien-tu': 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80',
   'noi-that': 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80',
   'me-va-be': 'https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=1200&q=80',
-  'nha-sach-van-phong-pham': 'https://images.unsplash.com/photo-1455885666463-9f41ab5e6ebd?auto=format&fit=crop&w=1200&q=80',
+  'nha-sach-van-phong-pham': 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=1200&q=80',
   'am-thuc-an-uong': 'https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=1200&q=80',
   'suc-khoe-nha-thuoc': 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80',
   'trang-suc-qua-tang': 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1200&q=80',
@@ -88,7 +88,7 @@ export function TrustSection() {
 
 export function FeatureSection() {
   const features = [
-    { title: 'Quản lý landing page', icon: Rocket, image: 'https://images.unsplash.com/photo-1551281044-8b5bd1f8f3b5?auto=format&fit=crop&w=1000&q=80' },
+    { title: 'Quản lý landing page', icon: Rocket, image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1000&q=80' },
     { title: 'Upload ảnh', icon: Sparkles, image: 'https://images.unsplash.com/photo-1484704849700-f032a568e944?auto=format&fit=crop&w=1000&q=80' },
     { title: 'Chỉnh HTML/CSS/JS', icon: ShieldCheck, image: 'https://images.unsplash.com/photo-1518773553398-650c184e0bb3?auto=format&fit=crop&w=1000&q=80' },
     { title: 'Preview realtime', icon: BadgeCheck, image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1000&q=80' },
@@ -212,52 +212,6 @@ export function WorkflowSection() {
             <p className="font-semibold">{s.title}</p>
           </div>
         ))}
-      </div>
-    </section>
-  );
-}
-
-export function PricingSection() {
-  const plans = [
-    { name: 'Basic', price: '299.000đ', desc: 'Cho startup nhỏ', features: ['1 project', '10 landing pages', 'Support email'] },
-    { name: 'Pro', price: '899.000đ', desc: 'Cho team marketing', features: ['10 projects', 'Không giới hạn pages', 'Priority support'], highlight: true },
-    { name: 'Agency', price: 'Liên hệ', desc: 'Cho agency và doanh nghiệp lớn', features: ['Không giới hạn projects', 'White-label', 'CSKH riêng'] }
-  ];
-
-  return (
-    <section id="pricing" className="py-12">
-      <div className="container-app">
-        <div className="rounded-3xl bg-gradient-to-br from-slate-900 via-slate-800 to-cyan-700 p-8 text-white md:p-10">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold">Bảng giá linh hoạt theo quy mô</h2>
-            <p className="mt-2 text-slate-200">Bắt đầu nhanh, mở rộng dễ dàng khi doanh nghiệp tăng trưởng.</p>
-          </div>
-          <div className="mt-8 grid gap-4 md:grid-cols-3">
-            {plans.map((p) => (
-              <div key={p.name} className={`rounded-2xl border p-5 shadow-lg ${p.highlight ? 'border-cyan-300 bg-white text-slate-900' : 'border-white/20 bg-white/10 text-white'}`}>
-                <h3 className="text-xl font-semibold">{p.name}</h3>
-                <div className="mt-3 h-28 overflow-hidden rounded-lg">
-                  <img
-                    src={p.name === 'Basic'
-                      ? 'https://images.unsplash.com/photo-1573496529574-be85d6a60704?auto=format&fit=crop&w=900&q=80'
-                      : p.name === 'Pro'
-                        ? 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=80'
-                        : 'https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=900&q=80'}
-                    alt={p.name}
-                    className="h-full w-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
-                <p className="mt-2 text-3xl font-bold">{p.price}</p>
-                <p className={`mt-1 text-sm ${p.highlight ? 'text-slate-600' : 'text-slate-200'}`}>{p.desc}</p>
-                <ul className="mt-4 space-y-2 text-sm">
-                  {p.features.map((f) => <li key={f}>• {f}</li>)}
-                </ul>
-                <button className={`mt-5 w-full rounded-xl px-4 py-2 font-semibold ${p.highlight ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}`}>Chọn gói</button>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   );

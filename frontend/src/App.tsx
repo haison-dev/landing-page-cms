@@ -8,7 +8,6 @@ import { AdminLayout } from "@/components/layout/AdminLayout";
 import { PublicLayout } from "@/components/layout/PublicLayout";
 
 const HomePage = lazy(() => import("@/pages/public/HomePage"));
-const PricingPage = lazy(() => import("@/pages/public/PricingPage"));
 const ContactPage = lazy(() => import("@/pages/public/ContactPage"));
 const IndustriesPage = lazy(() => import("@/pages/public/IndustriesPage"));
 const LandingPagesPage = lazy(() => import("@/pages/public/LandingPagesPage"));
@@ -63,7 +62,7 @@ const router = createBrowserRouter([
     element: <PublicLayout />,
     children: [
       { path: "/", element: withSuspense(<HomePage />) },
-      { path: "/pricing", element: withSuspense(<PricingPage />) },
+      { path: "/pricing", element: <Navigate to="/" replace /> },
       { path: "/contact", element: withSuspense(<ContactPage />) },
       { path: "/industries", element: withSuspense(<IndustriesPage />) },
       { path: "/landing-pages", element: withSuspense(<LandingPagesPage />) },

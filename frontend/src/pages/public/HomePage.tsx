@@ -4,7 +4,6 @@
   FeatureSection,
   HeroSection,
   IndustrySection,
-  PricingSection,
   ShowcaseSection,
   TrustSection,
   WorkflowSection
@@ -24,7 +23,6 @@ export default function HomePage() {
       <IndustrySection industries={industriesData || []} pages={pagesData?.items || []} />
       <ShowcaseSection pages={pagesData?.items || []} />
       <WorkflowSection />
-      <PricingSection />
       <ContactSection />
       <CTASection />
     </>

@@ -6,7 +6,6 @@ const links = [
   { to: '/', label: 'Trang chủ' },
   { to: '/landing-pages', label: 'Mẫu landing page' },
   { to: '/industries', label: 'Lĩnh vực' },
-  { to: '/pricing', label: 'Bảng giá' },
   { to: '/contact', label: 'Liên hệ' }
 ];
 
