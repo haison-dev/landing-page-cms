@@ -1,4 +1,4 @@
-﻿import { apiClient } from './apiClient';
+﻿import { apiClient } from "./apiClient";
 
 export type MediaItem = {
   publicId: string;
@@ -12,16 +12,34 @@ export type MediaItem = {
 export const uploadApi = {
   uploadImage: async (file: File) => {
     const fd = new FormData();
-    fd.append('image', file);
-    return (await apiClient.post<{ url: string; publicId: string }>('/uploads/image', fd, { headers: { 'Content-Type': 'multipart/form-data' } })).data;
+    fd.append("image", file);
+    return (
+      await apiClient.post<{ url: string; publicId: string }>(
+        "/uploads/image",
+        fd,
+        { headers: { "Content-Type": "multipart/form-data" } },
+      )
+    ).data;
   },
   getImages: async (params?: { limit?: number; nextCursor?: string }) =>
-    (await apiClient.get<{ items: MediaItem[]; nextCursor: string | null }>('/uploads/images', { params })).data,
+    (
+      await apiClient.get<{ items: MediaItem[]; nextCursor: string | null }>(
+        "/uploads/images",
+        { params },
+      )
+    ).data,
   deleteImage: async (publicId: string) =>
-    (await apiClient.delete(`/uploads/image/${encodeURIComponent(publicId)}`)).data,
+    (await apiClient.delete(`/uploads/image/${encodeURIComponent(publicId)}`))
+      .data,
   replaceImage: async (publicId: string, file: File) => {
     const fd = new FormData();
-    fd.append('image', file);
-    return (await apiClient.put<{ url: string; publicId: string }>(`/uploads/image/${encodeURIComponent(publicId)}`, fd, { headers: { 'Content-Type': 'multipart/form-data' } })).data;
-  }
+    fd.append("image", file);
+    return (
+      await apiClient.put<{ url: string; publicId: string }>(
+        `/uploads/image/${encodeURIComponent(publicId)}`,
+        fd,
+        { headers: { "Content-Type": "multipart/form-data" } },
+      )
+    ).data;
+  },
 };

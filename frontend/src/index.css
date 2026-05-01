@@ -8,7 +8,61 @@ body {
   @apply bg-slate-50 text-slate-900;
   font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
 }
+html {
+  scroll-behavior: smooth;
+}
 
 .container-app {
   @apply mx-auto w-full max-w-7xl px-4 md:px-6;
+}
+
+.industry-marquee-track {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+  animation: industry-marquee 28s linear infinite;
+}
+
+.industry-marquee-track.reverse {
+  animation-direction: reverse;
+}
+
+.industry-card {
+  position: relative;
+  width: 270px;
+  height: 156px;
+  border-radius: 18px;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: linear-gradient(135deg, #0f172a 0%, #155e75 100%);
+  background-size: cover;
+  background-position: center;
+}
+
+.industry-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.15));
+}
+
+.industry-card span {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 10px;
+  z-index: 1;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+@keyframes industry-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }

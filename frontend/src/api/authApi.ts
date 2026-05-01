@@ -1,5 +1,6 @@
-﻿import { apiClient } from './apiClient';
+﻿import { apiClient } from "./apiClient";
 
 export const authApi = {
-  login: async (payload: { email: string; password: string }) => (await apiClient.post('/auth/login', payload)).data
+  login: async (payload: { email: string; password: string }) =>
+    (await apiClient.post("/auth/login", payload)).data,
 };

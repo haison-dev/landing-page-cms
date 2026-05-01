@@ -5,9 +5,9 @@ import { Menu, X } from 'lucide-react';
 const links = [
   { to: '/', label: 'Trang chủ' },
   { to: '/landing-pages', label: 'Mẫu landing page' },
-  { to: '/industries/thoi-trang', label: 'Lĩnh vực' },
-  { to: '/#pricing', label: 'Bảng giá' },
-  { to: '/#contact', label: 'Liên hệ' }
+  { to: '/industries', label: 'Lĩnh vực' },
+  { to: '/pricing', label: 'Bảng giá' },
+  { to: '/contact', label: 'Liên hệ' }
 ];
 
 export function Header() {
@@ -23,8 +23,8 @@ export function Header() {
           ))}
         </nav>
         <div className="hidden items-center gap-2 md:flex">
-          <Link to="/landing-pages" className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium">Dùng thử</Link>
-          <a href="#contact" className="rounded-lg bg-slate-900 px-3 py-2 text-sm font-medium text-white">Tư vấn miễn phí</a>
+          <Link to="/admin/login" className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium">Đăng nhập</Link>
+          <Link to="/contact" className="rounded-lg bg-slate-900 px-3 py-2 text-sm font-medium text-white">Tư vấn miễn phí</Link>
         </div>
         <button className="md:hidden" onClick={() => setOpen((s) => !s)}>{open ? <X /> : <Menu />}</button>
       </div>
@@ -34,6 +34,7 @@ export function Header() {
             {links.map((item) => (
               <NavLink key={item.label} to={item.to} onClick={() => setOpen(false)} className="rounded-md px-2 py-2 hover:bg-slate-100">{item.label}</NavLink>
             ))}
+            <Link to="/admin/login" onClick={() => setOpen(false)} className="rounded-md border border-slate-300 px-2 py-2 text-sm font-medium">Đăng nhập</Link>
           </div>
         </div>
       ) : null}

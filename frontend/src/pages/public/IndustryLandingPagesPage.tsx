@@ -1,14 +1,13 @@
-﻿import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
-import { industryApi } from '@/api/industryApi';
-import { landingPageApi } from '@/api/landingPageApi';
+﻿import { useParams } from 'react-router-dom';
 import { LandingPageCard } from '@/components/public/LandingPageCard';
 import { EmptyState } from '@/components/public/EmptyState';
+import { useIndustryBySlugQuery } from '@/features/industries/hooks/useIndustryQueries';
+import { useLandingPagesQuery } from '@/features/landing-pages/hooks/useLandingPageQueries';
 
 export default function IndustryLandingPagesPage() {
   const { slug = '' } = useParams();
-  const { data: industry } = useQuery({ queryKey: ['industry-by-slug', slug], queryFn: () => industryApi.getBySlug(slug) });
-  const { data } = useQuery({ queryKey: ['industry-pages', slug], queryFn: () => landingPageApi.getAll({ status: 'published', industry: slug, page: 1, limit: 30 }) });
+  const { data: industry } = useIndustryBySlugQuery(slug);
+  const { data } = useLandingPagesQuery({ status: 'published', industry: slug, page: 1, limit: 30 });
 
   return (
     <section className="container-app py-10">

@@ -1,8 +1,6 @@
-﻿import { useQuery } from '@tanstack/react-query';
-import { industryApi } from '@/api/industryApi';
-import { landingPageApi } from '@/api/landingPageApi';
-import {
+﻿import {
   CTASection,
+  ContactSection,
   FeatureSection,
   HeroSection,
   IndustrySection,
@@ -11,23 +9,23 @@ import {
   TrustSection,
   WorkflowSection
 } from '@/components/public/Sections';
+import { useIndustriesQuery } from '@/features/industries/hooks/useIndustryQueries';
+import { useLandingPagesQuery } from '@/features/landing-pages/hooks/useLandingPageQueries';
 
 export default function HomePage() {
-  const { data: industriesData } = useQuery({ queryKey: ['industries-public-home'], queryFn: () => industryApi.getAll({ publicOnly: true }) });
-  const { data: pagesData } = useQuery({
-    queryKey: ['landing-pages-public-home'],
-    queryFn: () => landingPageApi.getAll({ status: 'published', page: 1, limit: 12 })
-  });
+  const { data: industriesData } = useIndustriesQuery({ publicOnly: true }, 'public');
+  const { data: pagesData } = useLandingPagesQuery({ status: 'published', page: 1, limit: 12 });
 
   return (
     <>
       <HeroSection />
       <TrustSection />
       <FeatureSection />
-      <IndustrySection industries={industriesData || []} />
+      <IndustrySection industries={industriesData || []} pages={pagesData?.items || []} />
       <ShowcaseSection pages={pagesData?.items || []} />
       <WorkflowSection />
       <PricingSection />
+      <ContactSection />
       <CTASection />
     </>
   );

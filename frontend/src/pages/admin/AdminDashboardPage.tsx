@@ -1,13 +1,13 @@
 ﻿import { useQuery } from '@tanstack/react-query';
 import { DashboardCard } from '@/components/admin/DashboardCard';
-import { industryApi } from '@/api/industryApi';
-import { landingPageApi } from '@/api/landingPageApi';
-import { templateApi } from '@/api/templateApi';
+import { useIndustriesQuery } from '@/features/industries/hooks/useIndustryQueries';
+import { useTemplatesQuery } from '@/features/templates/hooks/useTemplateQueries';
+import { useLandingPagesQuery } from '@/features/landing-pages/hooks/useLandingPageQueries';
 
 export default function AdminDashboardPage() {
-  const { data: industries } = useQuery({ queryKey: ['admin-industries-dashboard'], queryFn: () => industryApi.getAll() });
-  const { data: templates } = useQuery({ queryKey: ['admin-templates-dashboard'], queryFn: () => templateApi.getAll() });
-  const { data: pages } = useQuery({ queryKey: ['admin-pages-dashboard'], queryFn: () => landingPageApi.getAll({ page: 1, limit: 200 }) });
+  const { data: industries } = useIndustriesQuery(undefined, 'admin');
+  const { data: templates } = useTemplatesQuery();
+  const { data: pages } = useLandingPagesQuery({ page: 1, limit: 200 });
 
   const published = pages?.items.filter((p) => p.status === 'published').length || 0;
 

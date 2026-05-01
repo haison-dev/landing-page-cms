@@ -1,26 +1,25 @@
 ﻿import { useMemo, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { landingPageApi } from '@/api/landingPageApi';
-import { industryApi } from '@/api/industryApi';
 import { Input } from '@/components/ui/input';
 import { LandingPageCard } from '@/components/public/LandingPageCard';
 import { EmptyState } from '@/components/public/EmptyState';
 import { LoadingSkeleton } from '@/components/public/LoadingSkeleton';
 import { Button } from '@/components/ui/button';
+import { useLandingPagesQuery } from '@/features/landing-pages/hooks/useLandingPageQueries';
+import { useIndustriesQuery } from '@/features/industries/hooks/useIndustryQueries';
 
 export default function LandingPagesPage() {
   const [search, setSearch] = useState('');
   const [industry, setIndustry] = useState('');
   const [page, setPage] = useState(1);
 
-  const { data: industries } = useQuery({ queryKey: ['industries-public-list'], queryFn: () => industryApi.getAll({ publicOnly: true }) });
+  const { data: industries } = useIndustriesQuery({ publicOnly: true }, 'public');
 
   const params = useMemo(
     () => ({ status: 'published', search, industry, page, limit: 9 }),
     [search, industry, page]
   );
 
-  const { data, isLoading } = useQuery({ queryKey: ['landing-pages-public', params], queryFn: () => landingPageApi.getAll(params) });
+  const { data, isLoading } = useLandingPagesQuery(params);
 
   return (
     <section className="container-app py-10">

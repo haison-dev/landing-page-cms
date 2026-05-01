@@ -1,12 +1,11 @@
-﻿import { useQuery } from '@tanstack/react-query';
-import { useParams, Link } from 'react-router-dom';
-import { landingPageApi } from '@/api/landingPageApi';
+﻿import { useParams, Link } from 'react-router-dom';
 import { PreviewFrame } from '@/components/editor/PreviewFrame';
 import { EmptyState } from '@/components/public/EmptyState';
+import { useLandingPageBySlugQuery } from '@/features/landing-pages/hooks/useLandingPageQueries';
 
 export default function LandingPageDetailPage() {
   const { slug = '' } = useParams();
-  const { data, isLoading } = useQuery({ queryKey: ['landing-page-detail', slug], queryFn: () => landingPageApi.getBySlug(slug) });
+  const { data, isLoading } = useLandingPageBySlugQuery(slug);
 
   if (isLoading) return <div className="container-app py-10">Đang tải...</div>;
   if (!data) return <div className="container-app py-10"><EmptyState message="Landing page không tồn tại hoặc chưa publish." /></div>;

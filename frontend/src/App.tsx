@@ -1,58 +1,134 @@
-﻿import { Navigate, createBrowserRouter, RouterProvider } from 'react-router-dom';
-import HomePage from '@/pages/public/HomePage';
-import LandingPagesPage from '@/pages/public/LandingPagesPage';
-import LandingPageDetailPage from '@/pages/public/LandingPageDetailPage';
-import IndustryLandingPagesPage from '@/pages/public/IndustryLandingPagesPage';
-import AdminLoginPage from '@/pages/admin/AdminLoginPage';
-import IndustriesAdminPage from '@/pages/admin/IndustriesAdminPage';
-import TemplatesAdminPage from '@/pages/admin/TemplatesAdminPage';
-import TemplatesCreatePage from '@/pages/admin/TemplatesCreatePage';
-import TemplatesListPage from '@/pages/admin/TemplatesListPage';
-import LandingPagesAdminPage from '@/pages/admin/LandingPagesAdminPage';
-import LandingPagesCreatePage from '@/pages/admin/LandingPagesCreatePage';
-import LandingPagesListPage from '@/pages/admin/LandingPagesListPage';
-import AdminGuard from '@/pages/admin/AdminGuard';
-import AdminDashboardPage from '@/pages/admin/AdminDashboardPage';
-import AdminMediaPage from '@/pages/admin/AdminMediaPage';
-import AdminSettingsPage from '@/pages/admin/AdminSettingsPage';
-import { AdminLayout } from '@/components/layout/AdminLayout';
-import { PublicLayout } from '@/components/layout/PublicLayout';
+﻿import { Suspense, lazy, type ReactNode } from "react";
+import {
+  Navigate,
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import { AdminLayout } from "@/components/layout/AdminLayout";
+import { PublicLayout } from "@/components/layout/PublicLayout";
+
+const HomePage = lazy(() => import("@/pages/public/HomePage"));
+const PricingPage = lazy(() => import("@/pages/public/PricingPage"));
+const ContactPage = lazy(() => import("@/pages/public/ContactPage"));
+const IndustriesPage = lazy(() => import("@/pages/public/IndustriesPage"));
+const LandingPagesPage = lazy(() => import("@/pages/public/LandingPagesPage"));
+const LandingPageDetailPage = lazy(
+  () => import("@/pages/public/LandingPageDetailPage"),
+);
+const IndustryLandingPagesPage = lazy(
+  () => import("@/pages/public/IndustryLandingPagesPage"),
+);
+
+const AdminLoginPage = lazy(() => import("@/pages/admin/AdminLoginPage"));
+const IndustriesAdminPage = lazy(
+  () => import("@/pages/admin/IndustriesAdminPage"),
+);
+const TemplatesAdminPage = lazy(
+  () => import("@/pages/admin/TemplatesAdminPage"),
+);
+const TemplatesCreatePage = lazy(
+  () => import("@/pages/admin/TemplatesCreatePage"),
+);
+const TemplatesListPage = lazy(() => import("@/pages/admin/TemplatesListPage"));
+const LandingPagesAdminPage = lazy(
+  () => import("@/pages/admin/LandingPagesAdminPage"),
+);
+const LandingPagesCreatePage = lazy(
+  () => import("@/pages/admin/LandingPagesCreatePage"),
+);
+const LandingPagesListPage = lazy(
+  () => import("@/pages/admin/LandingPagesListPage"),
+);
+const AdminGuard = lazy(() => import("@/pages/admin/AdminGuard"));
+const AdminDashboardPage = lazy(
+  () => import("@/pages/admin/AdminDashboardPage"),
+);
+const AdminMediaPage = lazy(() => import("@/pages/admin/AdminMediaPage"));
+const AdminSettingsPage = lazy(() => import("@/pages/admin/AdminSettingsPage"));
+
+const withSuspense = (node: ReactNode) => (
+  <Suspense
+    fallback={
+      <div className="container-app py-10 text-sm text-slate-500">
+        Đang tải trang...
+      </div>
+    }
+  >
+    {node}
+  </Suspense>
+);
 
 const router = createBrowserRouter([
   {
     element: <PublicLayout />,
     children: [
-      { path: '/', element: <HomePage /> },
-      { path: '/landing-pages', element: <LandingPagesPage /> },
-      { path: '/landing-pages/:slug', element: <LandingPageDetailPage /> },
-      { path: '/industries/:slug', element: <IndustryLandingPagesPage /> }
-    ]
+      { path: "/", element: withSuspense(<HomePage />) },
+      { path: "/pricing", element: withSuspense(<PricingPage />) },
+      { path: "/contact", element: withSuspense(<ContactPage />) },
+      { path: "/industries", element: withSuspense(<IndustriesPage />) },
+      { path: "/landing-pages", element: withSuspense(<LandingPagesPage />) },
+      {
+        path: "/landing-pages/:slug",
+        element: withSuspense(<LandingPageDetailPage />),
+      },
+      {
+        path: "/industries/:slug",
+        element: withSuspense(<IndustryLandingPagesPage />),
+      },
+    ],
   },
-  { path: '/admin/login', element: <AdminLoginPage /> },
+  { path: "/admin/login", element: withSuspense(<AdminLoginPage />) },
   {
-    path: '/admin',
-    element: <AdminGuard />,
+    path: "/admin",
+    element: withSuspense(<AdminGuard />),
     children: [
       {
         element: <AdminLayout />,
         children: [
           { index: true, element: <Navigate to="/admin/dashboard" replace /> },
-          { path: 'dashboard', element: <AdminDashboardPage /> },
-          { path: 'industries', element: <IndustriesAdminPage /> },
-          { path: 'templates', element: <Navigate to="/admin/templates/list" replace /> },
-          { path: 'templates/list', element: <TemplatesListPage /> },
-          { path: 'templates/create', element: <TemplatesCreatePage /> },
-          { path: 'templates/legacy', element: <TemplatesAdminPage /> },
-          { path: 'landing-pages', element: <Navigate to="/admin/landing-pages/list" replace /> },
-          { path: 'landing-pages/list', element: <LandingPagesListPage /> },
-          { path: 'landing-pages/create', element: <LandingPagesCreatePage /> },
-          { path: 'landing-pages/legacy', element: <LandingPagesAdminPage /> },
-          { path: 'media', element: <AdminMediaPage /> },
-          { path: 'settings', element: <AdminSettingsPage /> }
-        ]
-      }
-    ]
-  }
+          { path: "dashboard", element: withSuspense(<AdminDashboardPage />) },
+          {
+            path: "industries",
+            element: withSuspense(<IndustriesAdminPage />),
+          },
+          {
+            path: "templates",
+            element: <Navigate to="/admin/templates/list" replace />,
+          },
+          {
+            path: "templates/list",
+            element: withSuspense(<TemplatesListPage />),
+          },
+          {
+            path: "templates/create",
+            element: withSuspense(<TemplatesCreatePage />),
+          },
+          {
+            path: "templates/legacy",
+            element: withSuspense(<TemplatesAdminPage />),
+          },
+          {
+            path: "landing-pages",
+            element: <Navigate to="/admin/landing-pages/list" replace />,
+          },
+          {
+            path: "landing-pages/list",
+            element: withSuspense(<LandingPagesListPage />),
+          },
+          {
+            path: "landing-pages/create",
+            element: withSuspense(<LandingPagesCreatePage />),
+          },
+          {
+            path: "landing-pages/legacy",
+            element: withSuspense(<LandingPagesAdminPage />),
+          },
+          { path: "media", element: withSuspense(<AdminMediaPage />) },
+          { path: "settings", element: withSuspense(<AdminSettingsPage />) },
+        ],
+      },
+    ],
+  },
 ]);
 
 export default function App() {
