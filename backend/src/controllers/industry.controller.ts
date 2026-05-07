@@ -1,44 +1,32 @@
-﻿import { Request, Response } from 'express';
-import slugify from 'slugify';
-import { Industry } from '../models/Industry';
+import { Request, Response } from 'express';
+import { IndustryService } from '../services/industry.service';
 
 export const createIndustry = async (req: Request, res: Response): Promise<void> => {
-  const payload = { ...req.body, slug: slugify(req.body.slug || req.body.name, { lower: true, strict: true }) };
-  const industry = await Industry.create(payload);
+  const industry = await IndustryService.create(req.body);
   res.status(201).json(industry);
 };
 
 export const getIndustries = async (req: Request, res: Response): Promise<void> => {
-  const { publicOnly, status } = req.query;
-  const filter: Record<string, unknown> = {};
-
-  if (publicOnly === 'true') filter.status = 'active';
-  if (status) filter.status = status;
-
-  const industries = await Industry.find(filter).sort({ createdAt: -1 });
+  const industries = await IndustryService.findAll(req.query as { publicOnly?: string; status?: string });
   res.json(industries);
 };
 
 export const getIndustryById = async (req: Request, res: Response): Promise<void> => {
-  const industry = await Industry.findById(req.params.id);
+  const industry = await IndustryService.findById(req.params.id);
   res.json(industry);
 };
 
 export const getIndustryBySlug = async (req: Request, res: Response): Promise<void> => {
-  const industry = await Industry.findOne({ slug: req.params.slug });
+  const industry = await IndustryService.findBySlug(req.params.slug);
   res.json(industry);
 };
 
 export const updateIndustry = async (req: Request, res: Response): Promise<void> => {
-  const payload = { ...req.body };
-  if (payload.slug || payload.name) {
-    payload.slug = slugify(payload.slug || payload.name, { lower: true, strict: true });
-  }
-  const industry = await Industry.findByIdAndUpdate(req.params.id, payload, { new: true });
+  const industry = await IndustryService.update(req.params.id, req.body);
   res.json(industry);
 };
 
 export const deleteIndustry = async (req: Request, res: Response): Promise<void> => {
-  await Industry.findByIdAndDelete(req.params.id);
+  await IndustryService.delete(req.params.id);
   res.status(204).send();
 };
