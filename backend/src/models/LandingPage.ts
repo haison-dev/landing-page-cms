@@ -1,4 +1,4 @@
-﻿import { Schema, model, Document, Types } from 'mongoose';
+import { Schema, model, Document, Types } from 'mongoose';
 
 export interface ILandingPage extends Document {
   title: string;
@@ -32,5 +32,9 @@ const landingPageSchema = new Schema<ILandingPage>(
   },
   { timestamps: true }
 );
+
+landingPageSchema.index({ industryId: 1, status: 1 });
+landingPageSchema.index({ status: 1 });
+landingPageSchema.index({ createdAt: -1 });
 
 export const LandingPage = model<ILandingPage>('LandingPage', landingPageSchema);

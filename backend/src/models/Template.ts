@@ -1,4 +1,4 @@
-﻿import { Schema, model, Document, Types } from 'mongoose';
+import { Schema, model, Document, Types } from 'mongoose';
 
 export interface ITemplate extends Document {
   name: string;
@@ -24,5 +24,8 @@ const templateSchema = new Schema<ITemplate>(
   },
   { timestamps: true }
 );
+
+templateSchema.index({ industryId: 1, status: 1 });
+templateSchema.index({ status: 1 });
 
 export const Template = model<ITemplate>('Template', templateSchema);
