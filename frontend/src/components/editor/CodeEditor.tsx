@@ -1,4 +1,5 @@
-﻿import Editor from '@monaco-editor/react';
+import { memo } from 'react';
+import Editor from '@monaco-editor/react';
 
 type Props = {
   htmlCode: string;
@@ -7,7 +8,7 @@ type Props = {
   onChange: (key: 'htmlCode' | 'cssCode' | 'jsCode', value: string) => void;
 };
 
-export function CodeEditor({ htmlCode, cssCode, jsCode, onChange }: Props) {
+export const CodeEditor = memo(function CodeEditor({ htmlCode, cssCode, jsCode, onChange }: Props) {
   return (
     <div className="grid gap-4 lg:grid-cols-3">
       <Editor height="260px" defaultLanguage="html" value={htmlCode} onChange={(v) => onChange('htmlCode', v || '')} />
@@ -15,4 +16,4 @@ export function CodeEditor({ htmlCode, cssCode, jsCode, onChange }: Props) {
       <Editor height="260px" defaultLanguage="javascript" value={jsCode} onChange={(v) => onChange('jsCode', v || '')} />
     </div>
   );
-}
+});

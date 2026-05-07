@@ -1,10 +1,10 @@
-﻿import { useState } from 'react';
+import { useState, memo } from 'react';
 import Editor from '@monaco-editor/react';
 import { Maximize2, Eye, Code2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PreviewFrame } from '@/components/editor/PreviewFrame';
 
-export function EditorPanel({
+export const EditorPanel = memo(function EditorPanel({
   html,
   css,
   js,
@@ -68,4 +68,4 @@ export function EditorPanel({
       )}
     </div>
   );
-}
+});
